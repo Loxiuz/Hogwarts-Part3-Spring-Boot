@@ -9,4 +9,5 @@ public class CourseController {
     public CourseController(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
+
 }
