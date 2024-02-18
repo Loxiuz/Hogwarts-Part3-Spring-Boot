@@ -3,6 +3,7 @@ package edu.hogwarts.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Course {
@@ -15,7 +16,7 @@ public class Course {
     @ManyToOne
     private Teacher teacher;
     @ManyToMany
-    private List<Student> students;
+    private Set<Student> students;
 
     public int getId() {
         return id;
@@ -57,11 +58,11 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 }
