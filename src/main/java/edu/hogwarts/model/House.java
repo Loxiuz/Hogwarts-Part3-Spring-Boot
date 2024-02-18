@@ -11,7 +11,7 @@ public class House {
     private int id;
     private String name;
     private String founder;
-    private String[] colors;
+//    private String[] colors;
 
     public int getId() {
         return id;
@@ -37,11 +37,11 @@ public class House {
         this.founder = founder;
     }
 
-    public String[] getColors() {
-        return colors;
-    }
-
-    public void setColors(String[] colors) {
-        this.colors = colors;
-    }
+//    public String[] getColors() {
+//        return colors;
+//    }
+//
+//    public void setColors(String[] colors) {
+//        this.colors = colors;
+//    }
 }
