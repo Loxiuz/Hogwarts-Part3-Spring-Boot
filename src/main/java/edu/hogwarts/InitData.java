@@ -5,6 +5,7 @@ import edu.hogwarts.model.House;
 import edu.hogwarts.model.Student;
 import edu.hogwarts.model.Teacher;
 import edu.hogwarts.repository.CourseRepository;
+import edu.hogwarts.repository.HouseRepository;
 import edu.hogwarts.repository.StudentRepository;
 import edu.hogwarts.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class InitData implements CommandLineRunner {
     private TeacherRepository teacherRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private HouseRepository houseRepository;
 
     public InitData(StudentRepository studentRepository, TeacherRepository teacherRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
@@ -35,15 +38,19 @@ public class InitData implements CommandLineRunner {
         //Houses
         House gryffindor = new House();
         gryffindor.setName("Gryffindor");
+        houseRepository.save(gryffindor);
 
         House hufflepuff = new House();
         hufflepuff.setName("HufflePuff");
+        houseRepository.save(hufflepuff);
 
         House ravenclaw = new House();
         ravenclaw.setName("Ravenclaw");
+        houseRepository.save(ravenclaw);
 
         House slytherin = new House();
         slytherin.setName("Slytherin");
+        houseRepository.save(slytherin);
 
         //Students
         Set<Student> students = new HashSet<>();
@@ -131,13 +138,13 @@ public class InitData implements CommandLineRunner {
         tracey.setHouse(slytherin);
         studentRepository.save(tracey);
         students.add(tracey);
-
+        //Teacher
         Teacher teacher = new Teacher();
         teacher.setFirstName("Minerva");
         teacher.setLastName("McGonagall");
         teacher.setHouse(gryffindor);
         teacherRepository.save(teacher);
-
+        //Course
         Course course = new Course();
         course.setTeacher(teacher);
         course.setStudents(students);
