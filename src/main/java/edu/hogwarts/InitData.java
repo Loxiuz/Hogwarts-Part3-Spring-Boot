@@ -1,18 +1,27 @@
-package edu.hogwarts.model;
+package edu.hogwarts;
 
+import edu.hogwarts.model.Course;
+import edu.hogwarts.model.House;
+import edu.hogwarts.model.Student;
+import edu.hogwarts.model.Teacher;
 import edu.hogwarts.repository.CourseRepository;
 import edu.hogwarts.repository.StudentRepository;
 import edu.hogwarts.repository.TeacherRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class InitData {
+public class InitData implements CommandLineRunner {
 
+    @Autowired
     private StudentRepository studentRepository;
+    @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
     private CourseRepository courseRepository;
 
     public InitData(StudentRepository studentRepository, TeacherRepository teacherRepository, CourseRepository courseRepository) {
@@ -21,7 +30,8 @@ public class InitData {
         this.courseRepository = courseRepository;
     }
 
-    public void initData(){
+    @Override
+    public void run(String... args) throws Exception {
         //Houses
         House gryffindor = new House();
         gryffindor.setName("Gryffindor");
