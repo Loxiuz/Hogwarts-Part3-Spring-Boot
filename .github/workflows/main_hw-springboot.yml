@@ -9,6 +9,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  JDBC_DB_URL: ${{secrets.JDBC_DB_URL}}
+  JDBC_DB_PASS: ${{secrets.JDBC_DB_PASS}}
+  JDBC_DB_USER: ${{secrets.JDBC_DB_USER}}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,6 +34,7 @@ jobs:
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
