@@ -1,9 +1,9 @@
 package edu.hogwarts.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 public class House {
     @Id
@@ -11,7 +11,9 @@ public class House {
     private int id;
     private String name;
     private String founder;
-//    private String[] colors;
+    @ElementCollection
+    @CollectionTable(name = "house_colors", joinColumns = @JoinColumn(name = "house_id"))
+    private List<String> color;
 
     public int getId() {
         return id;
@@ -37,11 +39,11 @@ public class House {
         this.founder = founder;
     }
 
-//    public String[] getColors() {
-//        return colors;
-//    }
-//
-//    public void setColors(String[] colors) {
-//        this.colors = colors;
-//    }
+    public List<String> getColor() {
+        return color;
+    }
+
+    public void setColor(List<String> colors) {
+        this.color = colors;
+    }
 }
