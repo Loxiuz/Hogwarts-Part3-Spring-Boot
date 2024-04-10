@@ -1,4 +1,5 @@
 package edu.hogwarts.repository;
+import edu.hogwarts.dto.StudentDto;
 import edu.hogwarts.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 

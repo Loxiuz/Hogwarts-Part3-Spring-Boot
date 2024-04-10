@@ -16,7 +16,7 @@ public class House {
     private String name;
     private String founder;
     @ElementCollection
-    @CollectionTable(name = "house_colors", joinColumns = @JoinColumn(name = "house_name"))
+    @CollectionTable(name = "house_colors", joinColumns = @JoinColumn(name = "house"))
     private List<String> colors;
 
     public House(String name, String founder, List<String> colors) {
