@@ -1,49 +1,27 @@
 package edu.hogwarts.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String name;
     private String founder;
     @ElementCollection
-    @CollectionTable(name = "house_colors", joinColumns = @JoinColumn(name = "house_id"))
-    private List<String> color;
+    @CollectionTable(name = "house_colors", joinColumns = @JoinColumn(name = "house_name"))
+    private List<String> colors;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public House(String name, String founder, List<String> colors) {
         this.name = name;
-    }
-
-    public String getFounder() {
-        return founder;
-    }
-
-    public void setFounder(String founder) {
         this.founder = founder;
-    }
-
-    public List<String> getColor() {
-        return color;
-    }
-
-    public void setColor(List<String> colors) {
-        this.color = colors;
+        this.colors = colors;
     }
 }

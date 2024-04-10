@@ -1,9 +1,15 @@
 package edu.hogwarts.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Student {
     @Id
@@ -20,83 +26,16 @@ public class Student {
     private int graduationYear;
     private boolean graduated;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public Student(int id, String firstName, String middleName, String lastName, LocalDate dateOfBirth, House house, boolean prefect, int enrollmentYear, int graduationYear, boolean graduated) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
         this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public House getHouse() {
-        return house;
-    }
-
-    public void setHouse(House house) {
         this.house = house;
-    }
-
-    public boolean isPrefect() {
-        return prefect;
-    }
-
-    public void setPrefect(boolean prefect) {
         this.prefect = prefect;
-    }
-
-    public int getEnrollmentYear() {
-        return enrollmentYear;
-    }
-
-    public void setEnrollmentYear(int enrollmentYear) {
         this.enrollmentYear = enrollmentYear;
-    }
-
-    public int getGraduationYear() {
-        return graduationYear;
-    }
-
-    public void setGraduationYear(int graduationYear) {
         this.graduationYear = graduationYear;
-    }
-
-    public boolean isGraduated() {
-        return graduated;
-    }
-
-    public void setGraduated(boolean graduated) {
         this.graduated = graduated;
     }
 }
