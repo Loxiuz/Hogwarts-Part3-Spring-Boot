@@ -20,6 +20,7 @@ public class Teacher {
     private String lastName;
     private LocalDate dateOfBirth;
     @ManyToOne
+    @JoinColumn(name = "house")
     private House house;
     private boolean headOfHouse;
     private String employment;

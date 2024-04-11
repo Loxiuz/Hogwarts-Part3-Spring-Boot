@@ -1,61 +1,123 @@
 package edu.hogwarts.controller;
 
+import edu.hogwarts.dto.StudentDto;
+import edu.hogwarts.dto.TeacherDto;
+import edu.hogwarts.model.House;
 import edu.hogwarts.model.Student;
 import edu.hogwarts.model.Teacher;
+import edu.hogwarts.repository.HouseRepository;
 import edu.hogwarts.repository.TeacherRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/teachers")
 public class TeacherController {
 
     private final TeacherRepository teacherRepository;
+    private final HouseRepository houseRepository;
 
-    public TeacherController(TeacherRepository teacherRepository) {
+    public TeacherController(TeacherRepository teacherRepository, HouseRepository houseRepository) {
         this.teacherRepository = teacherRepository;
+        this.houseRepository = houseRepository;
     }
 
-    @GetMapping("/teachers")
-    public List<Teacher> getAllTeachers(){
-        return teacherRepository.findAll();
+    @GetMapping
+    public List<TeacherDto> getAllTeachers(){
+        return teacherRepository.findAll().stream().map(TeacherDto::new).toList();
     }
 
-    @GetMapping("/teachers/{id}")
-    public ResponseEntity<Teacher> getTeacher(@PathVariable int id){
-        return ResponseEntity.of(teacherRepository.findById(id));
+    @GetMapping("/{id}")
+    public TeacherDto getTeacher(@PathVariable int id){
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database"));
+        return new TeacherDto(teacher);
     }
 
-    @PostMapping("/teachers")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Teacher createTeacher(@RequestBody Teacher teacher){
-        return teacherRepository.save(teacher);
+    public TeacherDto createTeacher(@RequestBody TeacherDto request){
+        Teacher newTeacher = new Teacher();
+        updateTeacher(newTeacher, request);
+        teacherRepository.save(newTeacher);
+        return new TeacherDto(newTeacher);
     }
 
-    @PutMapping("/teachers/{id}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable int id, @RequestBody Teacher teacher){
-        Optional<Teacher> original = teacherRepository.findById(id);
-        if(original.isPresent()){
-            Teacher originalTeacher = original.get();
-            originalTeacher.setFirstName(teacher.getFirstName());
-            originalTeacher.setLastName(teacher.getLastName());
-            originalTeacher.setDateOfBirth(teacher.getDateOfBirth());
-
-            Teacher updatedTeacher = teacherRepository.save(originalTeacher);
-            return ResponseEntity.ok().body(updatedTeacher);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/{id}")
+    public TeacherDto updateTeacher(@PathVariable int id, @RequestBody TeacherDto request){
+        Teacher teacherToEdit = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database")
+        );
+        updateTeacher(teacherToEdit, request);
+        teacherRepository.save(teacherToEdit);
+        return new TeacherDto(teacherToEdit);
     }
 
-    @DeleteMapping("/teachers/{id}")
-    public ResponseEntity<Teacher> deleteTeacher(@PathVariable int id){
-        Optional<Teacher> teacher = teacherRepository.findById(id);
+    @PatchMapping("/{id}/headOfHouse")
+    public TeacherDto editTeacherHeadOfHouse(@PathVariable int id, @RequestBody TeacherDto request){
+        Teacher teacherToEdit = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database")
+        );
+        updateTeacherHeadOfHouse(teacherToEdit, request);
+        teacherRepository.save(teacherToEdit);
+        return new TeacherDto(teacherToEdit);
+    }
+
+    @PatchMapping("/{id}/employmentEnd")
+    public TeacherDto editTeacherEmploymentEnd(@PathVariable int id, @RequestBody TeacherDto request){
+        Teacher teacherToEdit = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database")
+        );
+        updateTeacherEmploymentEnd(teacherToEdit, request);
+        teacherRepository.save(teacherToEdit);
+        return new TeacherDto(teacherToEdit);
+    }
+
+    @PatchMapping("/{id}/employment")
+    public TeacherDto editTeacherEmployment(@PathVariable int id, @RequestBody TeacherDto request){
+        Teacher teacherToEdit = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database")
+        );
+        updateTeacherEmployment(teacherToEdit, request);
+        teacherRepository.save(teacherToEdit);
+        return new TeacherDto(teacherToEdit);
+    }
+
+    @DeleteMapping("/{id}")
+    public TeacherDto deleteTeacher(@PathVariable int id){
+        Teacher deletedTeacher = teacherRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found in database")
+        );
         teacherRepository.deleteById(id);
-        return ResponseEntity.of(teacher);
+        return new TeacherDto(deletedTeacher);
+    }
+
+    public void updateTeacher(Teacher original, TeacherDto request) {
+        original.setFirstName(request.getFirstName());
+        original.setMiddleName(request.getMiddleName());
+        original.setLastName(request.getLastName());
+        original.setEmployment(request.getEmployment());
+        original.setEmploymentEnd(request.getEmploymentEnd());
+        original.setHeadOfHouse(request.isHeadOfHouse());
+        Optional<House> teacherHouse = houseRepository.findById(request.getHouse());
+        teacherHouse.ifPresent(original::setHouse);
+    }
+
+    public void updateTeacherHeadOfHouse(Teacher original, TeacherDto request){
+        original.setHeadOfHouse(request.isHeadOfHouse());
+    }
+
+    public void updateTeacherEmploymentEnd(Teacher original, TeacherDto request){
+        original.setEmploymentEnd(request.getEmploymentEnd());
+    }
+
+    public void updateTeacherEmployment(Teacher original, TeacherDto request){
+        original.setEmployment(request.getEmployment());
     }
 }
 

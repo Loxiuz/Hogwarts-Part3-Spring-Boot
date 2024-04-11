@@ -69,9 +69,9 @@ public class StudentController {
         Student studentToEdit = studentRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found in database")
         );
-    updateStudent(studentToEdit, request);
-    studentRepository.save(studentToEdit);
-    return new StudentDto(studentToEdit);
+        updateStudent(studentToEdit, request);
+        studentRepository.save(studentToEdit);
+        return new StudentDto(studentToEdit);
     }
 
     @PatchMapping("/{id}/prefect")

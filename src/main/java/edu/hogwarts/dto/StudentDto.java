@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class StudentDto {
     private String firstName;
     private String middleName;
     private String lastName;
+    private LocalDate dateOfBirth;
     private String house;
     private int schoolYear;
     private boolean prefect;
@@ -31,6 +34,7 @@ public class StudentDto {
         this.firstName = s.getFirstName();
         this.middleName = s.getMiddleName();
         this.lastName = s.getLastName();
+        this.dateOfBirth = s.getDateOfBirth();
         this.house = s.getHouse().getName();
         this.schoolYear = s.getSchoolYear();
         this.prefect = s.isPrefect();
