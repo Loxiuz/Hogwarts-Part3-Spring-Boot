@@ -1,8 +1,5 @@
 package edu.hogwarts.dto;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.hogwarts.model.Student;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

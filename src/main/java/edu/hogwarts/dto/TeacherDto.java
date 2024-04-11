@@ -1,9 +1,7 @@
 package edu.hogwarts.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import edu.hogwarts.model.House;
 import edu.hogwarts.model.Teacher;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

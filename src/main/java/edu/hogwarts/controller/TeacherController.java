@@ -1,14 +1,10 @@
 package edu.hogwarts.controller;
-
-import edu.hogwarts.dto.StudentDto;
 import edu.hogwarts.dto.TeacherDto;
 import edu.hogwarts.model.House;
-import edu.hogwarts.model.Student;
 import edu.hogwarts.model.Teacher;
 import edu.hogwarts.repository.HouseRepository;
 import edu.hogwarts.repository.TeacherRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
