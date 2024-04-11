@@ -122,8 +122,14 @@ public class StudentController {
         original.setFirstName(request.getFirstName());
         original.setMiddleName(request.getMiddleName());
         original.setLastName(request.getLastName());
+        original.setDateOfBirth(request.getDateOfBirth());
         Optional<House> studentHouse = houseRepository.findById(request.getHouse());
         studentHouse.ifPresent(original::setHouse);
+        original.setSchoolYear(request.getSchoolYear());
+        original.setPrefect(request.isPrefect());
+        original.setEnrollmentYear(request.getEnrollmentYear());
+        original.setGraduationYear(request.getGraduationYear());
+        original.setGraduated(request.isGraduated());
     }
 }
 

@@ -97,11 +97,13 @@ public class TeacherController {
         original.setFirstName(request.getFirstName());
         original.setMiddleName(request.getMiddleName());
         original.setLastName(request.getLastName());
-        original.setEmployment(request.getEmployment());
-        original.setEmploymentEnd(request.getEmploymentEnd());
-        original.setHeadOfHouse(request.isHeadOfHouse());
+        original.setDateOfBirth(request.getDateOfBirth());
         Optional<House> teacherHouse = houseRepository.findById(request.getHouse());
         teacherHouse.ifPresent(original::setHouse);
+        original.setHeadOfHouse(request.isHeadOfHouse());
+        original.setEmployment(request.getEmployment());
+        original.setEmploymentStart(request.getEmploymentStart());
+        original.setEmploymentEnd(request.getEmploymentEnd());
     }
 
     public void updateTeacherHeadOfHouse(Teacher original, TeacherDto request){
